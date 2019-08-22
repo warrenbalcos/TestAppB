@@ -2,7 +2,11 @@
 
 A test service app that listens to requests and runs a background task
 
-once the task is finished, a broadcast with the result will be sent.  
+once the task is finished, a broadcast with the result will be sent.
+
+features:
+- Echo Background Service
+- Math Operation Background Service  
 
 ## Getting Started
 
