@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Test App B</string>
+    <string name="empty_data_error_message">Empty data received</string>
+    <string name="unexpected_server_respose_error_message">unexpected response from the server</string>
+    <string name="remote_api_failed_error_message">remote API failed</string>
 </resources>
