@@ -10,6 +10,7 @@ import androidx.core.app.JobIntentService;
 
 import com.wfdb.testappb.network.NetworkService;
 import com.wfdb.testappb.network.response.EchoResponse;
+import com.wfdb.testappb.utils.Callback;
 import com.wfdb.testappb.utils.Constants;
 
 /**
@@ -35,7 +36,7 @@ public class EchoService extends JobIntentService {
             broadcastError(getString(R.string.empty_data_error_message));
             return;
         }
-        NetworkService.getInstance().echo(data, new com.wfdb.testappb.utils.Callback<EchoResponse>() {
+        NetworkService.getInstance().echo(data, new Callback<EchoResponse>() {
             @Override
             public void onSuccess(EchoResponse response) {
                 Log.d(TAG, "response -> " + response);

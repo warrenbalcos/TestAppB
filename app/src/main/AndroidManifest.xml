@@ -15,12 +15,17 @@
         <service
             android:name=".EchoService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".MathService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
         <receiver
             android:name=".MainBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SUBMIT_ECHO" />
+                <action android:name="android.intent.action.SUBMIT_MATH_OPERATION" />
             </intent-filter>
         </receiver>
     </application>
