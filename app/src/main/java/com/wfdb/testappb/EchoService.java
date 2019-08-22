@@ -8,16 +8,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 
-import com.wfdb.testappb.config.Config;
 import com.wfdb.testappb.network.NetworkService;
 import com.wfdb.testappb.network.response.EchoResponse;
 import com.wfdb.testappb.utils.Constants;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by warren on 2019-08-21.
@@ -42,30 +35,18 @@ public class EchoService extends JobIntentService {
             broadcastError(getString(R.string.empty_data_error_message));
             return;
         }
-        createNetworkService().echo(data).enqueue(new Callback<EchoResponse>() {
+        NetworkService.getInstance().echo(data, new com.wfdb.testappb.utils.Callback<EchoResponse>() {
             @Override
-            public void onResponse(Call<EchoResponse> call, Response<EchoResponse> response) {
-                EchoResponse body = response.body();
-                Log.d(TAG, "response -> " + body);
-                if (body == null) {
-                    broadcastError(getString(R.string.unexpected_server_respose_error_message));
-                } else {
-                    broadcastResponse(body);
-                }
+            public void onSuccess(EchoResponse response) {
+                Log.d(TAG, "response -> " + response);
+                broadcastResponse(response);
             }
 
             @Override
-            public void onFailure(Call<EchoResponse> call, Throwable t) {
-                broadcastError(getString(R.string.remote_api_failed_error_message), t);
+            public void onFail(Throwable e) {
+                broadcastError(getString(R.string.remote_api_failed_error_message), e);
             }
         });
-    }
-
-    private NetworkService createNetworkService() {
-        return new Retrofit.Builder()
-                .baseUrl(Config.getInstance().getBaseUrl())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(NetworkService.class);
     }
 
     private void broadcastResponse(EchoResponse data) {

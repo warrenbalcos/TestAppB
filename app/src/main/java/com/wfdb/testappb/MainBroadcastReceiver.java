@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.wfdb.testappb.config.Config;
+import com.wfdb.testappb.network.NetworkService;
+import com.wfdb.testappb.network.RetrofitNetworkNetworkProvider;
 import com.wfdb.testappb.utils.Constants;
 
 /**
@@ -33,6 +36,11 @@ public class MainBroadcastReceiver extends BroadcastReceiver {
             return;
         }
         Log.d(TAG, data);
+        if (!NetworkService.getInstance().hasEchoNetworkProvider()) {
+            NetworkService.getInstance().setEchoNetworkProvider(
+                    new RetrofitNetworkNetworkProvider(Config.getInstance().getBaseUrl())
+            );
+        }
         EchoService.enqueueWork(context, data);
     }
 
